@@ -8,11 +8,11 @@ import (
 )
 
 type LoggerInterface interface {
-	Debug(string, string, ...any)
-	Info(string, int, ...any)
-	Warn(string, string, ...any)
-	Error(string, string, int, error, ...any)
-	Fatal(string, string, error, ...any)
+	Debug(string, string, string, ...any)
+	Info(string, string, int, ...any)
+	Warn(string, string, string, ...any)
+	Error(string, string, string, int, error, ...any)
+	Fatal(string, string, string, error, ...any)
 }
 
 type Logger struct {
