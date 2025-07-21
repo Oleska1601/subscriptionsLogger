@@ -9,7 +9,7 @@ import (
 
 type LoggerInterface interface {
 	Debug(string, string, string, ...any)
-	InfowithStatus(string, string, int, ...any)
+	InfoWithStatus(string, string, int, ...any)
 	Info(string, string, ...any)
 	Warn(string, string, string, ...any)
 	ErrorWithStatus(string, string, string, int, error, ...any)
