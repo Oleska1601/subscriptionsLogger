@@ -3,6 +3,7 @@ package subscriptionsLogger
 import (
 	"context"
 	"log/slog"
+	"os"
 	"strings"
 )
 
@@ -28,22 +29,24 @@ func New(inputLevel string) *Logger {
 	return &Logger{logger: logger}
 }
 
-func (l *Logger) Debug(funcName string, methodName string, args ...any) {
-	l.logger.Debug(funcName+" "+methodName, args...)
+func (l *Logger) Debug(funcName string, actionName string, msg string, args ...any) {
+	l.logger.Debug(msg, append([]any{slog.String("path", funcName+" "+actionName)}, args...)...)
 }
 
-func (l *Logger) Info(funcName string, status int, args ...any) {
-	l.logger.Info(funcName, append([]any{slog.Int("status", status)}, args...)...)
+func (l *Logger) Info(funcName string, status int, msg string, args ...any) {
+	l.logger.Info(msg, append([]any{slog.String("path", funcName), slog.Int("status", status)}, args...)...)
 }
 
-func (l *Logger) Warn(funcName string, methodName string, args ...any) {
-	l.logger.Warn(funcName+" "+methodName, args...)
+func (l *Logger) Warn(funcName string, actionName string, msg string, args ...any) {
+	l.logger.Warn(msg, append([]any{slog.String("path", funcName+" "+actionName)}, args...)...)
 }
 
-func (l *Logger) Error(funcName string, methodName string, status int, err error, args ...any) {
-	l.logger.Error(funcName, append([]any{slog.Int("status", status), slog.Any("error", err)}, args...)...)
+func (l *Logger) Error(funcName string, actionName string, msg string, status int, err error, args ...any) {
+	l.logger.Error(funcName, append([]any{slog.String("path", funcName+" "+actionName), slog.Int("status", status), slog.Any("error", err)}, args...)...)
 }
 
-func (l *Logger) Fatal(funcName string, methodName string, err error, args ...any) {
-	l.logger.Log(context.Background(), LevelFatal, funcName+" "+methodName, append([]any{slog.Any("error", err)}, args...)...)
+func (l *Logger) Fatal(funcName string, actionName string, msg string, err error, args ...any) {
+
+	l.logger.Log(context.Background(), LevelFatal, msg, append([]any{slog.String("path", funcName+" "+actionName), slog.Any("error", err)}, args...)...)
+	os.Exit(1)
 }

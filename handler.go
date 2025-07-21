@@ -13,9 +13,6 @@ func newHandler(level slog.Level) slog.Handler {
 				level := a.Value.Any().(slog.Level)
 				return slog.String(slog.LevelKey, levelNames[level])
 			}
-			if a.Key == slog.MessageKey {
-				return slog.Attr{Key: "path", Value: a.Value}
-			}
 			return a
 		},
 	})
