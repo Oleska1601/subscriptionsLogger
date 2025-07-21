@@ -33,7 +33,7 @@ func (l *Logger) Debug(funcName string, actionName string, msg string, args ...a
 	l.logger.Debug(msg, append([]any{slog.String("path", funcName+" "+actionName)}, args...)...)
 }
 
-func (l *Logger) Info(funcName string, status int, msg string, args ...any) {
+func (l *Logger) Info(funcName string, msg string, status int, args ...any) {
 	l.logger.Info(msg, append([]any{slog.String("path", funcName), slog.Int("status", status)}, args...)...)
 }
 
