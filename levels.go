@@ -1,4 +1,4 @@
-package logger
+package subscriptionsLogger
 
 import "log/slog"
 
